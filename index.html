@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Clock Widget</title>
+<style>
+  @font-face {
+    font-family: 'Anurati';
+    src: url('./fonts/Anurati.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    background: transparent !important;
+    overflow: hidden;
+    font-family: 'Anurati', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .widget {
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    -webkit-app-region: drag;
+    user-select: none;
+  }
+
+  #day {
+    font-size: 58px;
+    font-weight: 400;
+    letter-spacing: 14px;
+    color: rgba(255, 255, 255, 0.95);
+    text-transform: uppercase;
+    line-height: 1;
+    text-shadow:
+      0 0 30px rgba(255,255,255,0.15),
+      0 2px 12px rgba(0,0,0,0.8);
+  }
+
+  #date {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
+    margin-top: 6px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.9);
+  }
+
+  .divider {
+    width: 32px;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+    margin: 7px 0;
+  }
+
+  #time {
+    font-size: 13px;
+    letter-spacing: 7px;
+    color: rgba(255, 255, 255, 0.55);
+    text-shadow: 0 1px 8px rgba(0,0,0,0.9);
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div id="day">SATURDAY</div>
+  <div id="date">27 JUNE, 2026</div>
+  <div class="divider"></div>
+  <div id="time">· 00:00:00 ·</div>
+</div>
+<script>
+  var days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+  var months = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function tick() {
+    var d = new Date();
+    document.getElementById('day').textContent = days[d.getDay()];
+    document.getElementById('date').textContent = pad(d.getDate()) + ' ' + months[d.getMonth()] + ', ' + d.getFullYear();
+    document.getElementById('time').textContent = '· ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + ' ·';
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>
+</body>
+</html>

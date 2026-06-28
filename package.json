@@ -1,0 +1,38 @@
+{
+  "name": "clock-widget",
+  "version": "1.0.0",
+  "description": "Transparent desktop clock widget",
+  "author": "Clock Widget",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.clockwidget.app",
+    "productName": "Clock Widget",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico",
+      "signingHashAlgorithms": null,
+      "sign": null
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "deleteAppDataOnUninstall": true,
+      "runAfterFinish": true
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "fonts/**",
+      "icon.ico",
+      "tray.png"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3"
+  }
+}
