@@ -1,9 +1,9 @@
 const { app, BrowserWindow, screen, Tray, Menu, nativeImage } = require('electron')
 const path = require('path')
 
-// These MUST be set before app is ready for transparency to work on relaunch
+// These MUST be set before app is ready for transparency to work on Windows
 app.commandLine.appendSwitch('enable-transparent-visuals')
-app.commandLine.appendSwitch('disable-gpu-compositing')
+app.commandLine.appendSwitch('disable-gpu')
 app.commandLine.appendSwitch('wm-window-animations-disabled')
 
 // Single instance lock
@@ -50,15 +50,18 @@ function createWindow() {
     x: display.bounds.x,
     y: display.bounds.y,
     transparent: true,
-    backgroundColor: '#00000000',   // explicit fully-transparent bg color
     frame: false,
     alwaysOnTop: false,
     skipTaskbar: true,
     resizable: false,
     movable: false,
+    minimizable: false,
+    maximizable: false,
+    fullscreenable: false,
     hasShadow: false,
-    show: false,                     // never show until we explicitly call it
+    show: false,
     focusable: false,
+    type: 'toolbar',
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -69,15 +72,19 @@ function createWindow() {
 
   win.once('ready-to-show', () => {
     // Small delay so the compositor has time to initialize transparency
-    // This is the key fix for the grey background on relaunch
     setTimeout(() => {
       win.showInactive()
       win.setIgnoreMouseEvents(true, { forward: true })
-    }, 150)
+    }, 300)
   })
 
   win.on('close', (e) => {
     if (!app.isQuiting) e.preventDefault()
+  })
+
+  // Prevent minimize via keyboard shortcuts or system events
+  win.on('minimize', () => {
+    win.restore()
   })
 }
 
