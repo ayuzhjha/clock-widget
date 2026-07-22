@@ -1,6 +1,6 @@
 # Clock Widget
 
-A lightweight transparent desktop clock widget built with Electron.  
+A lightweight transparent desktop clock widget Anurati Font built with Electron.  
 Displays the current **day**, **date**, and **time** in the Anurati font, floating over your wallpaper.
 
 ---
